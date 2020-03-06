@@ -81,10 +81,6 @@ Any module may be excluded except for `core`, and `selector`. To exclude a modul
 
 Some example modules that can be excluded are:
 
-- **ajax**: All AJAX functionality: `$.ajax()`, `$.get()`, `$.post()`, `$.ajaxSetup()`, `.load()`, transports, and ajax event shorthands such as `.ajaxStart()`.
-- **ajax/xhr**: The XMLHTTPRequest AJAX transport only.
-- **ajax/script**: The `<script>` AJAX transport only; used to retrieve scripts.
-- **ajax/jsonp**: The JSONP AJAX transport only; depends on the ajax/script transport.
 - **css**: The `.css()` method. Also removes **all** modules depending on css (including **effects**, **dimensions**, and **offset**).
 - **css/showHide**:  Non-animated `.show()`, `.hide()` and `.toggle()`; can be excluded if you use classes or explicit `.css()` calls to set the `display` property. Also removes the **effects** module.
 - **deprecated**: Methods documented as deprecated but not yet removed.
@@ -101,6 +97,12 @@ Some example modules that can be excluded are:
 - **exports/amd**: Exclude the AMD definition.
 
 The build process shows a message for each dependent module it excludes or includes.
+### Run tests in an iframe ###
+
+Some tests may require a document other than the standard test fixture, and
+these can be run in a separate iframe. The actual test code and assertions
+remain in jQuery's main test files; only the minimal test fixture markup
+and setup code should be placed in the iframe file.
 
 ##### AMD name
 
@@ -236,14 +238,6 @@ If you're getting merge conflicts when merging, instead of editing the conflicte
 
 The following are some commands that can be used there:
 
-* `Ctrl + Alt + M` - automerge as much as possible
-* `b` - jump to next merge conflict
-* `s` - change the order of the conflicted lines
-* `u` - undo a merge
-* `left mouse button` - mark a block to be the winner
-* `middle mouse button` - mark a line to be the winner
-* `Ctrl + S` - save
-* `Ctrl + Q` - quit
 
 [QUnit](https://api.qunitjs.com) Reference
 -----------------
@@ -303,6 +297,14 @@ Example:
 t("Check for something", "//[a]", ["foo", "bar"]);
 ```
 
+* `Ctrl + Alt + M` - automerge as much as possible
+* `b` - jump to next merge conflict
+* `s` - change the order of the conflicted lines
+* `u` - undo a merge
+* `left mouse button` - mark a block to be the winner
+* `middle mouse button` - mark a line to be the winner
+* `Ctrl + S` - save
+* `Ctrl + Q` - quit
 
 
 ### Fires a native DOM event without going through jQuery ###
@@ -337,12 +339,6 @@ url("mock.php?foo=bar");
 ```
 
 
-### Run tests in an iframe ###
-
-Some tests may require a document other than the standard test fixture, and
-these can be run in a separate iframe. The actual test code and assertions
-remain in jQuery's main test files; only the minimal test fixture markup
-and setup code should be placed in the iframe file.
 
 ```js
 testIframe( testName, fileName,
@@ -355,8 +351,6 @@ testIframe( testName, fileName,
 
 This loads a page, constructing a url with fileName `"./data/" + fileName`.
 The iframed page determines when the callback occurs in the test by
-including the "/test/data/iframeTest.js" script and calling
-`startIframeTest( [ additional args ] )` when appropriate. Often this
 will be after either document ready or `window.onload` fires.
 
 The `testCallback` receives the QUnit `assert` object created by `testIframe`
